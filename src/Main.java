@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args){
         Scanner input = new Scanner(System.in);
-
+        ArrayList<Rekening> rekenings = new ArrayList<>();
         Rekening akunAktif = null;
         boolean isRunning =true;
         System.out.println("=== SISTEM PERBANKAN MINI ===");
@@ -15,6 +15,7 @@ public class Main {
             System.out.println("2. Setor Tunai");
             System.out.println("3. Tark Tunai");
             System.out.println("4. Cek Informasi Rekening");
+            System.out.println("5. Ganti akun");
             System.out.println("0. Keluar");
             System.out.print("Pilih menu: ");
             if (!input.hasNextInt()){
@@ -44,6 +45,7 @@ public class Main {
                         break;
                     }
                     akunAktif = new Rekening(no,nama,saldo);
+                    rekenings.add(akunAktif);
                     break;
                 case 2:
                     if (akunAktif == null){
@@ -87,7 +89,30 @@ public class Main {
                     if (akunAktif == null){
                         System.out.println("Error: Anda belum buka rekening!");
                     } else {
+                        System.out.println(rekenings.size() );
                         akunAktif.cekInformasi();
+                    }
+                    break;
+                case 5:
+                    if (rekenings.isEmpty()){
+                        System.out.println("Error: Belum ada rekening yang pernah dibuat");
+                        continue;
+                    }
+                    System.out.print("Masukkan No Rekening: ");
+                    String nomor = input.nextLine();
+                    System.out.print("Masukkan Nama Pemilik: ");
+                    String namauser = input.nextLine();
+                    boolean found = false;
+                    for (Rekening loopedRek : rekenings){
+                        if (nomor.equalsIgnoreCase(loopedRek.nomorRekening) && namauser.equalsIgnoreCase(loopedRek.namaPemiliki)) {
+                            akunAktif=loopedRek;
+                            System.out.println("Akun Ditemukan!!");
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found){
+                        System.out.println("akun tidak ditmeukan");
                     }
                     break;
                 case 0:

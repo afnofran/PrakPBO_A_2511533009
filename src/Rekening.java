@@ -44,6 +44,6 @@ public class Rekening {
     }
 
     public String formatNumber(double num){
-        return NumberFormat.getCurrencyInstance().format(num);
+        return "Rp"+NumberFormat.getNumberInstance(Locale.GERMANY).format(num) +",00";
     }
 }
