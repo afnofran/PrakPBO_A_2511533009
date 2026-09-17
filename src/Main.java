@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -16,6 +15,7 @@ public class Main {
             System.out.println("3. Tark Tunai");
             System.out.println("4. Cek Informasi Rekening");
             System.out.println("5. Ganti akun");
+            System.out.println("6. Cetak Mutasi (Riwayat)");
             System.out.println("0. Keluar");
             System.out.print("Pilih menu: ");
             if (!input.hasNextInt()){
@@ -113,6 +113,14 @@ public class Main {
                     }
                     if (!found){
                         System.out.println("akun tidak ditmeukan");
+                    }
+                    break;
+                case 6:
+                    //Tugas 2 Praktikum 2
+                    if (akunAktif == null){
+                        System.out.println("Error: Mohon maaf, Anda belum memiliki nomor rekening");
+                    }else {
+                        akunAktif.cetakMutasi();
                     }
                     break;
                 case 0:
