@@ -6,7 +6,11 @@ import java.util.Locale;
 public class Rekening {
     String nomorRekening;
     String namaPemiliki;
+
     double saldo;
+    double saldoAwal;
+
+    double pengeluaranTerbesar = 0,pengeluaranTerkecil = 0,pemasukanTerbesar = 0,pemasukanTerkecil= 0;
 
     //Implementasis Asosiasi (1 to many)
     ArrayList<Transaksi> riwayatTransaksi;
@@ -15,14 +19,38 @@ public class Rekening {
         nomorRekening = nomor;
         namaPemiliki = nama;
         saldo = saldoAwal;
+        this.saldoAwal=saldoAwal;
         //Wajib menginisialisasi ArrayList di dalam constructor agar tidak NullPointerException
         this.riwayatTransaksi = new ArrayList<>();
 
         System.out.println("Rekening atas nama " + namaPemiliki + " berhasil dibuat dengan saldo  " + formatNumber(saldo));
     }
 
+    public void tampilkanAkumulasi(){
+        double totalSetor = 0;
+        double totalTarik = 0;
+        for (Transaksi transaksi : riwayatTransaksi){
+            if (transaksi.jenis == "Kredit") {
+                totalSetor+=transaksi.nominal;
+            } else if (transaksi.jenis == "Debit") {
+                totalTarik +=transaksi.nominal;
+            }
+        }
+
+        System.out.println("Totall Setor: " + totalSetor);
+        System.out.println("Total TAIRK: " + totalTarik);
+        System.out.println("Akumulasi: " + (totalSetor - totalTarik));
+        System.out.println("Saldo Sebelumnya: " + formatNumber(saldoAwal));
+        System.out.println("Saldo saat ini: " + formatNumber(saldo));
+    }
+
     public void setorTunai(double nominal){
         if (nominal > 0){
+            if (nominal > pemasukanTerbesar){
+                pemasukanTerbesar = nominal;
+            } else if (nominal < pemasukanTerbesar) {
+                pemasukanTerkecil = nominal;
+            }
             saldo+=nominal;
             //Mrekam riwta
             String idTrx = "TRX-S-" + System.currentTimeMillis();
@@ -51,7 +79,11 @@ public class Rekening {
             System.out.println("Transaksi Gagal: Minimal nominal penarikan 10.000");
         }else {
             saldo-=nominal;
-
+            if (nominal > pengeluaranTerbesar){
+                pengeluaranTerbesar = nominal;
+            } else if (nominal < pengeluaranTerbesar) {
+                pengeluaranTerkecil = nominal;
+            }
             //Mrekam riwta
             String idTrx = "TRX-T-" + System.currentTimeMillis();
             Transaksi trxBaru = new Transaksi(idTrx,"Debit",nominal);
@@ -68,10 +100,19 @@ public class Rekening {
             return;
         }
         System.out.println("=======");
-        for (Transaksi transaksi : riwayatTransaksi)
-            transaksi.cetakDetail();
+        for (int i = riwayatTransaksi.size() - 1;i>=riwayatTransaksi.size() - 3;i--){
+            riwayatTransaksi.get(i).cetakDetail();
+        }
+//        for (Transaksi transaksi : riwayatTransaksi)
         System.out.println("=======");
 
+    }
+
+    public void cetakTerbesarTerkecil(){
+        System.out.println("Pemasukan Terbesar: " + pemasukanTerbesar);
+        System.out.println("Pemasukan Terkecil: " + pemasukanTerkecil);
+        System.out.println("pengeluaran Terbesar: " + pengeluaranTerbesar);
+        System.out.println("pengeluaran Terkecil: " + pengeluaranTerkecil);
     }
 
     public String formatNumber(double num){

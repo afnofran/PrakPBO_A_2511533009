@@ -16,6 +16,8 @@ public class Main {
             System.out.println("4. Cek Informasi Rekening");
             System.out.println("5. Ganti akun");
             System.out.println("6. Cetak Mutasi (Riwayat)");
+            System.out.println("7. Cetak Terbesar dan Terkecil");
+            System.out.println("8. Tmapilkan Akumulasi");
             System.out.println("0. Keluar");
             System.out.print("Pilih menu: ");
             if (!input.hasNextInt()){
@@ -122,6 +124,20 @@ public class Main {
                     }else {
                         akunAktif.cetakMutasi();
                     }
+                    break;
+                    //Tugas 2 Praktikum 2
+                case 7:
+                    if (akunAktif == null){
+                        System.out.println("Belum buka akun");
+
+                    }else
+                        akunAktif.cetakTerbesarTerkecil();
+                    break;
+                case 8:
+                    if (akunAktif == null) {
+                        System.out.println("Silahkan buka akun terlebih dahulu");
+                    }else
+                        akunAktif.tampilkanAkumulasi();
                     break;
                 case 0:
                     isRunning = false;
