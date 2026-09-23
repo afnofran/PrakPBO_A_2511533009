@@ -100,7 +100,7 @@ public class Rekening {
             return;
         }
         System.out.println("=======");
-        for (int i = riwayatTransaksi.size() - 1;i>=riwayatTransaksi.size() - 3;i--){
+        for (int i = riwayatTransaksi.size() -1;i>riwayatTransaksi.size() - 3;i--){
             riwayatTransaksi.get(i).cetakDetail();
         }
 //        for (Transaksi transaksi : riwayatTransaksi)
