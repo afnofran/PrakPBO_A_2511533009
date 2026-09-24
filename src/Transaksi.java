@@ -1,7 +1,7 @@
 public class Transaksi {
-    String idTransaksi;
-    String jenis;
-    double nominal;
+    private String idTransaksi;
+    private String jenis;
+    private double nominal;
 
     public Transaksi(String id, String jenis, double nominal){
         this.idTransaksi = id;
@@ -12,5 +12,15 @@ public class Transaksi {
     public void cetakDetail(){
         System.out.println("ID: " + idTransaksi + " | Jenis: " + jenis + " | Nominal: Rp" +
                 nominal);
+    }
+
+    public String getIdTransaksi() {
+        return idTransaksi;
+    }
+    public String getJenis(){
+        return this.jenis;
+    }
+    public double getNominal(){
+        return this.nominal;
     }
 }

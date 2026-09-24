@@ -4,36 +4,77 @@ import java.util.Currency;
 import java.util.Locale;
 
 public class Rekening {
-    String nomorRekening;
-    String namaPemiliki;
+    private String nomorRekening;
+    private String namaPemiliki;
+    private String pin;
 
-    double saldo;
-    double saldoAwal;
+    private boolean terblokir;
 
-    double pengeluaranTerbesar = 0,pengeluaranTerkecil = 0,pemasukanTerbesar = 0,pemasukanTerkecil= 0;
+    private double saldo;
+    private double saldoAwal;
+
+    private double pengeluaranTerbesar = 0,pengeluaranTerkecil = 0,pemasukanTerbesar = 0,pemasukanTerkecil= 0;
 
     //Implementasis Asosiasi (1 to many)
-    ArrayList<Transaksi> riwayatTransaksi;
+    private ArrayList<Transaksi> riwayatTransaksi;
 
-    public Rekening(String nomor, String nama, double saldoAwal){
+    public Rekening(String nomor, String nama, double saldoAwal, String pinAwal){
         nomorRekening = nomor;
         namaPemiliki = nama;
         saldo = saldoAwal;
+        this.terblokir = false;
         this.saldoAwal=saldoAwal;
+        if (pinAwal.length() == 6){
+            this.pin=pinAwal;
+        }else{
+            System.out.println("Peringatan: PIN harus 6 digit, Menggunakan PIN default 123456");
+            this.pin="123456";
+        }
+
+
         //Wajib menginisialisasi ArrayList di dalam constructor agar tidak NullPointerException
         this.riwayatTransaksi = new ArrayList<>();
 
         System.out.println("Rekening atas nama " + namaPemiliki + " berhasil dibuat dengan saldo  " + formatNumber(saldo));
     }
 
+    public String getNomorRekening(){
+        return this.nomorRekening;
+    }
+    public String getNamaPemiliki(){
+        return namaPemiliki;
+    }
+
+    int pinSalah=0;
+    public boolean ontentikasi(String inputPin){
+        if (!this.pin.equals(inputPin)) pinSalah+=1;
+        if (this.pinSalah == 3){
+            this.terblokir = true;
+            System.out.println("akun Anda terblokir");
+        }
+        return this.pin.equals(inputPin);
+    }
+    public boolean isTerblokir(){
+        if (terblokir) System.out.println("Akun anda terblokir");
+        return terblokir;
+    }
+    public void gantiPin(String input){
+        if (input.equals(pin)){
+            System.out.println("Error: PIN TIDAK BOLEH SAMA");
+            return;
+        }
+        this.pin=input;
+    }
+
+
     public void tampilkanAkumulasi(){
         double totalSetor = 0;
         double totalTarik = 0;
         for (Transaksi transaksi : riwayatTransaksi){
-            if (transaksi.jenis == "Kredit") {
-                totalSetor+=transaksi.nominal;
-            } else if (transaksi.jenis == "Debit") {
-                totalTarik +=transaksi.nominal;
+            if (transaksi.getJenis() == "Kredit") {
+                totalSetor+=transaksi.getNominal();
+            } else if (transaksi.getJenis() == "Debit") {
+                totalTarik +=transaksi.getNominal();
             }
         }
 
@@ -100,7 +141,8 @@ public class Rekening {
             return;
         }
         System.out.println("=======");
-        for (int i = riwayatTransaksi.size() -1;i>riwayatTransaksi.size() - 3;i--){
+        for (int i = riwayatTransaksi.size() - 1;i<riwayatTransaksi.size();i--){
+
             riwayatTransaksi.get(i).cetakDetail();
         }
 //        for (Transaksi transaksi : riwayatTransaksi)
