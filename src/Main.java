@@ -16,9 +16,11 @@ public class Main {
             System.out.println("4. Cek Informasi Rekening");
             System.out.println("5. Ganti akun");
             System.out.println("6. Cetak Mutasi (Riwayat)");
-            System.out.println("7. Cetak Terbesar dan Terkecil");
-            System.out.println("8. Tmapilkan Akumulasi");
-            System.out.println("9. Ganti PIN");
+            System.out.println("7. Simulasi Akhir Bulan (Khusus Tabungan)");
+            System.out.println("8. Cetak Terbesar dan Terkecil");
+            System.out.println("9. Tmapilkan Akumulasi");
+            System.out.println("10. Ganti PIN");
+            System.out.println("11. Simulasi Akhir Tahun");
             System.out.println("0. Keluar");
             System.out.print("Pilih menu: ");
             if (!input.hasNextInt()){
@@ -63,7 +65,29 @@ public class Main {
                         continue;
                     }
 
-                    akunAktif = new Rekening(no,nama,saldo,String.valueOf(pin));
+
+                    System.out.println("Pilih Produk: 1. Tabungan Umum | 2. Gro Bisnis | 3. Rekening VIP");
+                    System.out.print("Pilihan:");
+                    int opsiProduk = input.nextInt();
+                    if (opsiProduk == 1){
+                        System.out.print("Masukkan Bunga (Persen): ");
+                        double sukuBunga = input.nextDouble();
+
+                        akunAktif = new RekeningTabungan(no,nama,saldo,String.valueOf(pin),sukuBunga);
+
+                    }else if(opsiProduk == 2){
+                        System.out.print("Masukkan Limit Pinjaman: 1");
+                        double limitPinjaman = input.nextDouble();
+                        akunAktif = new RekeningGiro(no,nama,saldo,String.valueOf(pin),limitPinjaman);
+                    } else if (opsiProduk == 3) {
+                        System.out.println("Selamat, Rekening Anda VIP Nih Bonus 100.000 ");
+                        akunAktif = new RekeningVIP(no,nama,saldo,String.valueOf(pin));
+                        akunAktif.setorTunai(100_000);
+                    } else{
+                        System.out.println("Pilihan tidak valid (tidak ada di menu)");
+                        continue;
+                    }
+
                     rekenings.add(akunAktif);
                     break;
                 case 2:
@@ -160,8 +184,20 @@ public class Main {
                         }
                     }
                     break;
-                    //Tugas 2 Praktikum 2
                 case 7:
+                    if (akunAktif == null) {
+                        System.out.println("belum ada akun");
+                        break;
+                    }
+                    if (!(akunAktif instanceof RekeningTabungan)){
+                        System.out.println("Gagal: Fitur bunga akhir bulan hanya berlaku untuk Rekening Tabungan.");
+                        break;
+                    }
+
+                    ((RekeningTabungan) akunAktif).tambahBungaAkhirBulan();
+                    break;
+                    //Tugas 2 Praktikum 2
+                case 8:
                     if (akunAktif == null){
                         System.out.println("Belum buka akun");
 
@@ -169,7 +205,7 @@ public class Main {
                         if (akunAktif.isTerblokir()) continue;
                         akunAktif.cetakTerbesarTerkecil();
                     break;
-                case 8:
+                case 9:
                     if (akunAktif == null) {
                         System.out.println("Silahkan buka akun terlebih dahulu");
                     }else{
@@ -178,7 +214,7 @@ public class Main {
 
                     }
                     break;
-                case 9:
+                case 10:
                     if (akunAktif == null) {
                         System.out.println("Silahkan buka akun terlebih dahulu");
                     }else{
@@ -189,6 +225,25 @@ public class Main {
                     }
 
                     break;
+                case 11:
+                    if (akunAktif == null)
+                        System.out.println("Silahkan buat ");
+                    else
+                        if (!(akunAktif instanceof RekeningTabungan)){
+                            System.out.println("AYE YOW INI BUKAN REKENING TABUNGAN");
+                            break;
+                        }
+                        RekeningTabungan rt = (RekeningTabungan) akunAktif;
+                        if (!rt.isAkhirTahun()){
+                            System.out.println("AYE YOW BELUM AKHIR TAHUN");
+                            break;
+                        }
+                        if (!rt.isOrangKaya()){
+                            System.out.println("Tabungan mu dibawah 10.000.000 Tidak bisa dapet bonus akhir tahunaowaowkawokawokw");
+                        }
+                        rt.tambahBungaAkhirTahun();
+                        rt.resetBulan();
+                        break;
                 case 0:
                     isRunning = false;
                     System.out.println("Sistem ditutup. Terima kasih!");

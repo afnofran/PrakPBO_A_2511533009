@@ -10,13 +10,13 @@ public class Rekening {
 
     private boolean terblokir;
 
-    private double saldo;
+    protected double saldo;
     private double saldoAwal;
 
     private double pengeluaranTerbesar = 0,pengeluaranTerkecil = 0,pemasukanTerbesar = 0,pemasukanTerkecil= 0;
 
     //Implementasis Asosiasi (1 to many)
-    private ArrayList<Transaksi> riwayatTransaksi;
+    protected ArrayList<Transaksi> riwayatTransaksi;
 
     public Rekening(String nomor, String nama, double saldoAwal, String pinAwal){
         nomorRekening = nomor;
@@ -112,9 +112,20 @@ public class Rekening {
         System.out.println("----------------------");
     }
 
+    double batasTarik = Integer.MAX_VALUE;
+    public void setBatasTarik(double nominal){
+        this.batasTarik=nominal;
+    }
+    public boolean diAtasBatas(double nominal){
+        return nominal >= batasTarik;
+    }
     public void tarikTunai(double nominal){
         if (nominal > saldo){
             System.out.println("Transaksi Gagal: Saldo tidak mencukupi. Saldo Anda: Rp[" + saldo+']');
+        }
+        if (diAtasBatas(nominal)){
+            System.out.println("Tidak bisa melakukan penarikan di atas limit tarik (500.000");
+            return;
         }
         else if (nominal <10000){
             System.out.println("Transaksi Gagal: Minimal nominal penarikan 10.000");
