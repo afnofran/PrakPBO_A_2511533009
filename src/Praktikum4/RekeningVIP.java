@@ -1,0 +1,7 @@
+package Praktikum4;
+
+public class RekeningVIP extends Rekening{
+    public RekeningVIP(String nomor, String nama, double saldoAwal, String pinAwal) {
+        super(nomor, nama, saldoAwal, pinAwal);
+    }
+}
