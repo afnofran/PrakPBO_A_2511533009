@@ -1,6 +1,7 @@
+package Praktikum5;
+
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.Locale;
 
 public class Rekening {
@@ -35,7 +36,7 @@ public class Rekening {
         //Wajib menginisialisasi ArrayList di dalam constructor agar tidak NullPointerException
         this.riwayatTransaksi = new ArrayList<>();
 
-        System.out.println("Rekening atas nama " + namaPemiliki + " berhasil dibuat dengan saldo  " + formatNumber(saldo));
+        System.out.println("Praktikum5.Rekening atas nama " + namaPemiliki + " berhasil dibuat dengan saldo  " + formatNumber(saldo));
     }
 
     public String getNomorRekening(){
@@ -73,7 +74,7 @@ public class Rekening {
         for (Transaksi transaksi : riwayatTransaksi){
             if (transaksi.getJenis() == "Kredit") {
                 totalSetor+=transaksi.getNominal();
-            } else if (transaksi.getJenis() == "Debit") {
+            } else if (transaksi.getJenis() == "Praktikum5.Debit") {
                 totalTarik +=transaksi.getNominal();
             }
         }
@@ -106,7 +107,7 @@ public class Rekening {
 
     public void cekInformasi(){
         System.out.println("--- INFO REKENING ---");
-        System.out.println("No. Rekening : " + nomorRekening);
+        System.out.println("No. Praktikum5.Rekening : " + nomorRekening);
         System.out.println("Nama pemilik : " + namaPemiliki);
         System.out.println("Saldo Akhir  : " + formatNumber(saldo));
         System.out.println("----------------------");
@@ -121,7 +122,7 @@ public class Rekening {
     }
     public boolean tarikTunai(double nominal){
         if (nominal > saldo){
-            System.out.println("Transaksi Gagal: Saldo tidak mencukupi. Saldo Anda: Rp[" + saldo+']');
+            System.out.println("Praktikum5.Transaksi Gagal: Saldo tidak mencukupi. Saldo Anda: Rp[" + saldo+']');
             return false;
         }
         if (diAtasBatas(nominal)){
@@ -129,7 +130,7 @@ public class Rekening {
             return false;
         }
         else if (nominal <10000){
-            System.out.println("Transaksi Gagal: Minimal nominal penarikan 10.000");
+            System.out.println("Praktikum5.Transaksi Gagal: Minimal nominal penarikan 10.000");
             return false;
         }else {
             saldo-=nominal;
@@ -140,7 +141,7 @@ public class Rekening {
             }
             //Mrekam riwta
             String idTrx = "TRX-T-" + System.currentTimeMillis();
-            Transaksi trxBaru = new Transaksi(idTrx,"Debit",nominal);
+            Transaksi trxBaru = new Transaksi(idTrx,"Praktikum5.Debit",nominal);
             riwayatTransaksi.add(trxBaru);
 
             System.out.println("Penarikan dengan nominal Rp "+ formatNumber(nominal) + " berhasil! Sisa Saldo Anda: " + formatNumber(saldo));
@@ -159,7 +160,7 @@ public class Rekening {
 
             riwayatTransaksi.get(i).cetakDetail();
         }
-//        for (Transaksi transaksi : riwayatTransaksi)
+//        for (Praktikum5.Transaksi transaksi : riwayatTransaksi)
         System.out.println("=======");
 
     }
@@ -178,11 +179,11 @@ public class Rekening {
     public void transfer(Rekening tujuan, double nominal, String pinInput) {
         // Langkah 1: Autentikasi PIN
         if (!this.pin.equals(pinInput)) { // Asumsi atribut PIN dinamai 'pin' atau gunakan getter
-            System.out.println("Transaksi Gagal: PIN yang Anda masukkan salah!");
+            System.out.println("Praktikum5.Transaksi Gagal: PIN yang Anda masukkan salah!");
             return;
         }
         if (this.getNomorRekening().equals(tujuan.getNomorRekening())) {
-            System.out.println("Transaksi Gagal: Tidak dapat melakukan transfer ke rekening sendiri!");
+            System.out.println("Praktikum5.Transaksi Gagal: Tidak dapat melakukan transfer ke rekening sendiri!");
             return;
         }
 

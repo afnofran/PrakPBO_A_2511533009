@@ -1,3 +1,5 @@
+package Praktikum5;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -10,10 +12,10 @@ public class Main {
         System.out.println("=== SISTEM PERBANKAN MINI ===");
         while (isRunning) {
             System.out.println("\nMenu Utama:");
-            System.out.println("1. Buka Rekening Baru");
+            System.out.println("1. Buka Praktikum5.Rekening Baru");
             System.out.println("2. Setor Tunai");
             System.out.println("3. Tark Tunai");
-            System.out.println("4. Cek Informasi Rekening");
+            System.out.println("4. Cek Informasi Praktikum5.Rekening");
             System.out.println("5. Ganti akun");
             System.out.println("6. Cetak Mutasi (Riwayat)");
             System.out.println("7. Simulasi Akhir Bulan (Khusus Tabungan)");
@@ -33,7 +35,7 @@ public class Main {
             input.nextLine();
             switch (pilihan){
                 case 1:
-                    System.out.print("Masukkan No Rekening: ");
+                    System.out.print("Masukkan No Praktikum5.Rekening: ");
                     String no = input.nextLine();
                     System.out.println();
                     System.out.print("Masukkan Nama Pemilik: ");
@@ -47,11 +49,11 @@ public class Main {
                     double saldo = input.nextDouble();
 
                     if (saldo <= 50000){
-                        System.out.println("Rekening baru harus di isi dengan saldo awal Rp 50.000");
+                        System.out.println("Praktikum5.Rekening baru harus di isi dengan saldo awal Rp 50.000");
                         break;
                     }
                     input.nextLine();
-                    System.out.print("Masukkan Pin Untuk Rekening ini (6 digit): ");
+                    System.out.print("Masukkan Pin Untuk Praktikum5.Rekening ini (6 digit): ");
                     if (!input.hasNextInt()){
                         System.out.println("pin harus erupa angka");
                         continue;
@@ -67,7 +69,7 @@ public class Main {
                     }
 
 
-                    System.out.println("Pilih Produk: 1. Tabungan Umum | 2. Gro Bisnis | 3. Rekening VIP");
+                    System.out.println("Pilih Produk: 1. Tabungan Umum | 2. Gro Bisnis | 3. Praktikum5.Rekening VIP");
                     System.out.print("Pilihan:");
                     int opsiProduk = input.nextInt();
                     if (opsiProduk == 1){
@@ -81,7 +83,7 @@ public class Main {
                         double limitPinjaman = input.nextDouble();
                         akunAktif = new RekeningGiro(no,nama,saldo,String.valueOf(pin),limitPinjaman);
                     } else if (opsiProduk == 3) {
-                        System.out.println("Selamat, Rekening Anda VIP Nih Bonus 100.000 ");
+                        System.out.println("Selamat, Praktikum5.Rekening Anda VIP Nih Bonus 100.000 ");
                         akunAktif = new RekeningVIP(no,nama,saldo,String.valueOf(pin));
                         akunAktif.setorTunai(100_000);
                     } else{
@@ -152,7 +154,7 @@ public class Main {
                         System.out.println("Error: Belum ada rekening yang pernah dibuat");
                         continue;
                     }
-                    System.out.print("Masukkan No Rekening: ");
+                    System.out.print("Masukkan No Praktikum5.Rekening: ");
                     String nomor = input.nextLine();
                     System.out.print("Masukkan Nama Pemilik: ");
                     String namauser = input.nextLine();
@@ -191,7 +193,7 @@ public class Main {
                         break;
                     }
                     if (!(akunAktif instanceof RekeningTabungan)){
-                        System.out.println("Gagal: Fitur bunga akhir bulan hanya berlaku untuk Rekening Tabungan.");
+                        System.out.println("Gagal: Fitur bunga akhir bulan hanya berlaku untuk Praktikum5.Rekening Tabungan.");
                         break;
                     }
 
@@ -249,8 +251,8 @@ public class Main {
                     if (akunAktif == null)
                         System.out.println("Silahkan buat akun");
                     else
-                        // Minta Nomor Rekening Tujuan
-                        System.out.print("Masukkan Nomor Rekening Tujuan: ");
+                        // Minta Nomor Praktikum5.Rekening Tujuan
+                        System.out.print("Masukkan Nomor Praktikum5.Rekening Tujuan: ");
                     String noRekTujuan = input.nextLine();
 
                     // Cari nomor rekening tujuan di daftarRekening
@@ -274,7 +276,7 @@ public class Main {
                         // Panggil method transfer
                         akunAktif.transfer(akunTujuan, nominalTransfer, pinInput);
                     } else {
-                        System.out.println("Transaksi Gagal: Rekening tujuan tidak ditemukan!");
+                        System.out.println("Praktikum5.Transaksi Gagal: Praktikum5.Rekening tujuan tidak ditemukan!");
                     }
                     break;
                 case 0:

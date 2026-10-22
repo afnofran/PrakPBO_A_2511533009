@@ -1,3 +1,5 @@
+package Praktikum5;
+
 public class RekeningTabungan extends Rekening{
     private double sukuBunga;
 

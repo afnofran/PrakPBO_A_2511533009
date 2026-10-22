@@ -1,3 +1,5 @@
+package Praktikum5;
+
 public class Transaksi {
     private String idTransaksi;
     private String jenis;

@@ -1,3 +1,5 @@
+package Praktikum5;
+
 public class RekeningGiro extends Rekening{
     double batasOverdraft;
     public RekeningGiro(String nomor, String nama, double saldoAwal, String pinAwal, double batasOverdraft) {
@@ -14,14 +16,14 @@ public class RekeningGiro extends Rekening{
         }
         // Logika Khusus Giro: Boleh tarik melebihi saldo asal tidak melebihi (saldo + batasOverdraft)
         else if (nominal > (saldo + batasOverdraft)) {
-            System.out.println("Transaksi Gagal: Melebihi batas overdraft! Maksimal penarikan: Rp" + (saldo + batasOverdraft));
+            System.out.println("Praktikum5.Transaksi Gagal: Melebihi batas overdraft! Maksimal penarikan: Rp" + (saldo + batasOverdraft));
             return false;
         }
         else {
             saldo -= nominal; // Saldo bisa bernilai negatif di atas batas overdraft
 
             String idTrx = "TRX-G-" + System.currentTimeMillis();
-            riwayatTransaksi.add(new Transaksi(idTrx, "Debit Giro", nominal));
+            riwayatTransaksi.add(new Transaksi(idTrx, "Praktikum5.Debit Giro", nominal));
 
             System.out.println("Tarik tunai Giro Rp" + nominal + " berhasil. Saldo saat ini: Rp" + saldo);
             return true;
