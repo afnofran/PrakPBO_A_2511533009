@@ -119,16 +119,18 @@ public class Rekening {
     public boolean diAtasBatas(double nominal){
         return nominal >= batasTarik;
     }
-    public void tarikTunai(double nominal){
+    public boolean tarikTunai(double nominal){
         if (nominal > saldo){
             System.out.println("Transaksi Gagal: Saldo tidak mencukupi. Saldo Anda: Rp[" + saldo+']');
+            return false;
         }
         if (diAtasBatas(nominal)){
             System.out.println("Tidak bisa melakukan penarikan di atas limit tarik (500.000");
-            return;
+            return false;
         }
         else if (nominal <10000){
             System.out.println("Transaksi Gagal: Minimal nominal penarikan 10.000");
+            return false;
         }else {
             saldo-=nominal;
             if (nominal > pengeluaranTerbesar){
@@ -142,6 +144,7 @@ public class Rekening {
             riwayatTransaksi.add(trxBaru);
 
             System.out.println("Penarikan dengan nominal Rp "+ formatNumber(nominal) + " berhasil! Sisa Saldo Anda: " + formatNumber(saldo));
+            return true;
         }
     }
 
@@ -170,5 +173,26 @@ public class Rekening {
 
     public String formatNumber(double num){
         return "Rp"+NumberFormat.getNumberInstance(Locale.GERMANY).format(num) +",00";
+    }
+
+    public void transfer(Rekening tujuan, double nominal, String pinInput) {
+        // Langkah 1: Autentikasi PIN
+        if (!this.pin.equals(pinInput)) { // Asumsi atribut PIN dinamai 'pin' atau gunakan getter
+            System.out.println("Transaksi Gagal: PIN yang Anda masukkan salah!");
+            return;
+        }
+        if (this.getNomorRekening().equals(tujuan.getNomorRekening())) {
+            System.out.println("Transaksi Gagal: Tidak dapat melakukan transfer ke rekening sendiri!");
+            return;
+        }
+
+        boolean suksesTarik = this.tarikTunai(nominal);
+
+        if (suksesTarik) {
+            tujuan.setorTunai(nominal);
+            System.out.println("Transfer sebesar Rp" + nominal + " ke rekening " + tujuan.getNomorRekening() + " BERHASIL!");
+        } else {
+            System.out.println("Transfer GAGAL dialokasikan.");
+        }
     }
 }

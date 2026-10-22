@@ -21,6 +21,7 @@ public class Main {
             System.out.println("9. Tmapilkan Akumulasi");
             System.out.println("10. Ganti PIN");
             System.out.println("11. Simulasi Akhir Tahun");
+            System.out.println("12. Transker ke rekening lain");
             System.out.println("0. Keluar");
             System.out.print("Pilih menu: ");
             if (!input.hasNextInt()){
@@ -244,6 +245,38 @@ public class Main {
                         rt.tambahBungaAkhirTahun();
                         rt.resetBulan();
                         break;
+                case 12:
+                    if (akunAktif == null)
+                        System.out.println("Silahkan buat akun");
+                    else
+                        // Minta Nomor Rekening Tujuan
+                        System.out.print("Masukkan Nomor Rekening Tujuan: ");
+                    String noRekTujuan = input.nextLine();
+
+                    // Cari nomor rekening tujuan di daftarRekening
+                    Rekening akunTujuan = null;
+                    for (Rekening rek : rekenings) {
+                        if (rek.getNomorRekening().equalsIgnoreCase(noRekTujuan)) {
+                            akunTujuan = rek;
+                            break;
+                        }
+                    }
+
+                    // Jika rekening tujuan ditemukan
+                    if (akunTujuan != null) {
+                        System.out.print("Masukkan Nominal Transfer: ");
+                        double nominalTransfer = input.nextDouble();
+                        input.nextLine(); // Consume newline
+
+                        System.out.print("Masukkan PIN Anda: ");
+                        String pinInput = input.nextLine();
+
+                        // Panggil method transfer
+                        akunAktif.transfer(akunTujuan, nominalTransfer, pinInput);
+                    } else {
+                        System.out.println("Transaksi Gagal: Rekening tujuan tidak ditemukan!");
+                    }
+                    break;
                 case 0:
                     isRunning = false;
                     System.out.println("Sistem ditutup. Terima kasih!");
